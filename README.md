@@ -34,10 +34,10 @@ There are a few options you can use to configure alchemist's behavior. An exampl
 
 ```js
 alchemist('public', {
-  url: '/',    // the url to serve content from
-  gzip: true,  // use gzip to compress content before serving
-  index: true, // use auto-index, this can also be a filename or false
-  dot: false   // whether or not to serve dotfiles
+  url: '/',            // the url to serve content from
+  gzip: true,          // use gzip to compress content before serving
+  index: 'index.html', // filename, true is auto-index, false is no directory indices
+  dot: false           // whether or not to serve dotfiles
 });
 ```
 

@@ -1,13 +1,13 @@
 var chai = require('chai'),
     http = require('chai-http'),
     path = require('path'),
-    alchemist_middleware = require('../..');
+    alchemist = require('../..');
 
 var should = chai.should();
 
 chai.use(http);
 
-global.alchemist_middleware = alchemist_middleware;
+global.alchemist = alchemist;
 global.chai = chai;
 global.should = should;
 global.path = path;

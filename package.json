@@ -26,5 +26,9 @@
   },
   "engines": {
     "node": ">=0.10.0"
+  },
+  "dependencies": {
+    "st": "^0.4.1",
+    "lodash.defaults": "^2.4.1"
   }
 }

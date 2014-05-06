@@ -2,13 +2,22 @@ connect = require 'connect'
 
 describe 'basic', ->
 
-  it 'should be registered as middleware', ->
-    (-> connect().use(alchemist_middleware())).should.not.throw()
+  before ->
+    @app = connect().use(alchemist(path.join(base_path, 'basic')))
 
-  it 'should modify a request body', (done) ->
-    app = connect().use(alchemist_middleware("middleware'd!"))
+  it 'serve a file', (done) ->
+    chai.request(@app).get('/index.html').res (res) ->
+      res.text.should.equal('<p>hello world!</p>\n')
+      res.should.have.status(200)
+      done()
 
-    chai.request(app).get('/').res (res) ->
+  it 'serve a directory index', (done) ->
+    chai.request(@app).get('/').res (res) ->
+      res.text.should.equal('<p>hello world!</p>\n')
+      res.should.have.status(200)
+      done()
+
+  it 'should error if file doesnt exist', (done) ->
+    chai.request(@app).get('/foo.html').res (res) ->
       res.should.have.status(500)
-      res.text.should.equal("middleware'd!")
       done()
