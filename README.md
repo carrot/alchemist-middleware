@@ -1,6 +1,6 @@
 # alchemist-middleware
 
-[![npm](http://img.shields.io/npm/v/alchemist-middleware.svg?style=flat)](https://badge.fury.io/js/alchemist-middleware) [![tests](http://img.shields.io/travis/carrot/alchemist-middleware/master.svg?style=flat)](https://travis-ci.org/carrot/alchemist-middleware) [![dependencies](http://img.shields.io/gemnasium/carrot/alchemist-middleware.svg?style=flat)](https://gemnasium.com/carrot/alchemist-middleware)
+[![npm](http://img.shields.io/npm/v/alchemist-middleware.svg?style=flat)](https://badge.fury.io/js/alchemist-middleware) [![tests](http://img.shields.io/travis/carrot/alchemist-middleware/master.svg?style=flat)](https://travis-ci.org/carrot/alchemist-middleware) [![coverage](http://img.shields.io/coveralls/carrot/alchemist-middleware.svg?style=flat)](https://coveralls.io/r/carrot/alchemist-middleware) [![dependencies](http://img.shields.io/gemnasium/carrot/alchemist-middleware.svg?style=flat)](https://gemnasium.com/carrot/alchemist-middleware)
 
 Procuring static files since 1802.
 
