@@ -32,7 +32,7 @@ http.createServer(app).listen(1111);
 
 There are a few options you can use to configure alchemist's behavior. An example is shown below with all the options filled out as their default values:
 
-```
+```js
 alchemist('public', {
   url: '/',    // the url to serve content from
   gzip: true,  // use gzip to compress content before serving
