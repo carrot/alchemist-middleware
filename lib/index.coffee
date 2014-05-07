@@ -2,7 +2,10 @@ st       = require 'st'
 defaults = require 'lodash.defaults'
 
 module.exports = (root, opts = {}) ->
-  options = defaults(opts, { index: 'index.html' })
+  options = defaults opts,
+    index: 'index.html'
+    cache: { content: { maxAge: false } } # disable cache control headers
+
   options.path = root
   options.passthrough = true
 
