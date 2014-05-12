@@ -5,6 +5,7 @@ module.exports = (root, opts = {}) ->
   options = defaults opts,
     index: 'index.html'
     cache: { content: { maxAge: false } } # disable cache control headers
+    gzip: false
 
   options.path = root
   options.passthrough = true

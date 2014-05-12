@@ -37,7 +37,7 @@ describe 'options', ->
     @app = connect().use(alchemist(@base))
 
     chai.request(@app).get('/').res (res) ->
-      res.headers['content-encoding'].should.equal('gzip')
+      should.not.exist(res.headers['content-encoding'])
       done()
 
   it 'uses doesnt use gzip if turned off', (done) ->
