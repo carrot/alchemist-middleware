@@ -1,3 +1,4 @@
+http    = require 'http'
 connect = require 'connect'
 
 describe 'basic', ->
@@ -5,15 +6,41 @@ describe 'basic', ->
   before ->
     @app = connect().use(alchemist(path.join(base_path, 'basic')))
 
-  it 'serve a file', (done) ->
+  it 'should error if a root path is not passed', ->
+    (-> alchemist()).should.throw()
+
+  it 'should pass through if not a GET request', (done) ->
+    chai.request(@app).post('/').res (res) ->
+      res.should.have.status(404)
+      done()
+
+  it 'should serve a file', (done) ->
     chai.request(@app).get('/index.html').res (res) ->
       res.text.should.equal('<p>hello world!</p>\n')
       res.should.have.status(200)
       done()
 
-  it 'serve a directory index', (done) ->
+  it 'should serve the index', (done) ->
     chai.request(@app).get('/').res (res) ->
       res.text.should.equal('<p>hello world!</p>\n')
+      res.should.have.status(200)
+      done()
+
+  it 'should serve a directory index', (done) ->
+    chai.request(@app).get('/foo').res (res) ->
+      res.text.should.equal('<p>this is the foo folder</p>\n')
+      res.should.have.status(200)
+      done()
+
+  it 'should serve a directory index with a trailing slash', (done) ->
+    chai.request(@app).get('/foo/').res (res) ->
+      res.text.should.equal('<p>this is the foo folder</p>\n')
+      res.should.have.status(200)
+      done()
+
+  it 'should serve a nested file', (done) ->
+    chai.request(@app).get('/foo/index.html').res (res) ->
+      res.text.should.equal('<p>this is the foo folder</p>\n')
       res.should.have.status(200)
       done()
 
@@ -30,6 +57,18 @@ describe 'basic', ->
       res.should.have.status(404)
       sentinel.should.be.true
       done()
+
+  it 'should work with a raw node http server', (done) ->
+    server = http.createServer (req, res) ->
+      alchemist(path.join(base_path, 'basic')) req, res, ->
+        res.end()
+
+    server.listen(1234)
+    chai.request(server).get('/').res (res) ->
+      res.should.have.status(200)
+      res.text.should.equal('<p>hello world!</p>\n')
+      server.close(done)
+
 
 describe 'options', ->
 

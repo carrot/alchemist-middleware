@@ -13,14 +13,12 @@ module.exports = (root, opts = {}) ->
     _url = url.parse(req.originalUrl or req.url)
     _path = parseurl(req).pathname
 
-    if _path is '/' and _url.pathname.slice(-1) is not '/' then return dir()
-
     send(req, _path, opts)
       .on('error', next)
-      .on('directory', dir)
+      .on('directory', dir.bind(null, _url, res))
       .pipe(res)
 
-dir = (res) ->
+dir = (_url, res) ->
   _url.pathname += '/'
   target = url.format(_url)
   res.statusCode = 303
