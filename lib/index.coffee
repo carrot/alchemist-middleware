@@ -1,16 +1,28 @@
-st       = require 'st'
-defaults = require 'lodash.defaults'
+send     = require 'send'
+path     = require 'path'
+parseurl = require 'parseurl'
+url      = require 'url'
 
 module.exports = (root, opts = {}) ->
-  options = defaults opts,
-    index: 'index.html'
-    cache: { content: { maxAge: false } } # disable cache control headers
-    gzip: false
-
-  options.path = root
-  options.passthrough = true
-
-  middleware = st(options)
+  if not root then throw new TypeError('root path required')
+  opts.root = path.resolve(root)
 
   return (req, res, next) ->
-    middleware(req, res, next.bind(null, "file not found"))
+    if req.method != 'GET' and req.method != 'HEAD' then return next()
+
+    _url = url.parse(req.originalUrl or req.url)
+    _path = parseurl(req).pathname
+
+    if _path is '/' and _url.pathname.slice(-1) is not '/' then return dir()
+
+    send(req, _path, opts)
+      .on('error', next)
+      .on('directory', dir)
+      .pipe(res)
+
+dir = (res) ->
+  _url.pathname += '/'
+  target = url.format(_url)
+  res.statusCode = 303
+  res.setHeader('Location', target)
+  res.end("Redirecting to #{target}")
