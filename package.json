@@ -30,7 +30,7 @@
     "node": ">=0.10.0"
   },
   "dependencies": {
-    "st": "git://github.com/jenius/st.git",
-    "lodash.defaults": "^2.4.1"
+    "parseurl": "1.x",
+    "send": "0.3.x"
   }
 }
