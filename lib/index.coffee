@@ -8,7 +8,7 @@ module.exports = (root, opts = {}) ->
   opts.root = path.resolve(root)
 
   return (req, res, next) ->
-    if req.method != 'GET' and req.method != 'HEAD' then return next()
+    if req.method not in ['GET', 'HEAD'] then return next()
 
     _url = url.parse(req.originalUrl or req.url)
     _path = parseurl(req).pathname
