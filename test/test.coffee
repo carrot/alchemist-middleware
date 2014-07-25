@@ -117,10 +117,10 @@ describe 'options', ->
       done()
 
   it 'sets cache control headers if "maxage" option is present', (done) ->
-    @app = connect().use(alchemist(@base, { maxage: 1337 }))
+    @app = connect().use(alchemist(@base, { maxage: 2000 }))
 
     chai.request(@app).get('/').res (res) ->
-      res.headers['cache-control'].should.equal('public, max-age=1.337')
+      res.headers['cache-control'].should.equal('public, max-age=2')
       done()
 
   it 'does not clobber previously set cache control headers', (done) ->
