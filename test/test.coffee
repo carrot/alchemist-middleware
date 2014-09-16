@@ -63,7 +63,7 @@ describe 'basic', ->
       alchemist(path.join(base_path, 'basic')) req, res, ->
         res.end()
 
-    server.listen(1234)
+    server.listen(1235)
     chai.request(server).get('/').res (res) ->
       res.should.have.status(200)
       res.text.should.equal('<p>hello world!</p>\n')
@@ -103,7 +103,7 @@ describe 'options', ->
       done()
 
   it 'serves dotfiles if "hidden" option is true', (done) ->
-    @app = connect().use(alchemist(@base, { hidden: true }))
+    @app = connect().use(alchemist(@base, { dotfiles: 'allow' }))
 
     chai.request(@app).get('/.secret').res (res) ->
       res.should.have.status(200)

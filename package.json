@@ -18,7 +18,7 @@
     "istanbul": "*",
     "mocha-lcov-reporter": "*",
     "coveralls": "*",
-    "coffee-script": "1.7.x"
+    "coffee-script": "1.8.x"
   },
   "scripts": {
     "test": "npm run lint && mocha",
@@ -31,6 +31,6 @@
   },
   "dependencies": {
     "parseurl": "1.x",
-    "send": "0.6.x"
+    "send": "0.9.x"
   }
 }
