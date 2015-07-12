@@ -10,36 +10,36 @@ describe 'basic', ->
     (-> alchemist()).should.throw()
 
   it 'should pass through if not a GET request', (done) ->
-    chai.request(@app).post('/').res (res) ->
+    chai.request(@app).post('/').end (res) ->
       res.should.have.status(404)
       done()
 
   it 'should serve a file', (done) ->
-    chai.request(@app).get('/index.html').res (res) ->
+    chai.request(@app).get('/index.html').end (res) ->
       res.text.should.equal('<p>hello world!</p>\n')
       res.should.have.status(200)
       done()
 
   it 'should serve the index', (done) ->
-    chai.request(@app).get('/').res (res) ->
+    chai.request(@app).get('/').end (res) ->
       res.text.should.equal('<p>hello world!</p>\n')
       res.should.have.status(200)
       done()
 
   it 'should serve a directory index', (done) ->
-    chai.request(@app).get('/foo').res (res) ->
+    chai.request(@app).get('/foo').end (res) ->
       res.text.should.equal('<p>this is the foo folder</p>\n')
       res.should.have.status(200)
       done()
 
   it 'should serve a directory index with a trailing slash', (done) ->
-    chai.request(@app).get('/foo/').res (res) ->
+    chai.request(@app).get('/foo/').end (res) ->
       res.text.should.equal('<p>this is the foo folder</p>\n')
       res.should.have.status(200)
       done()
 
   it 'should serve a nested file', (done) ->
-    chai.request(@app).get('/foo/index.html').res (res) ->
+    chai.request(@app).get('/foo/index.html').end (res) ->
       res.text.should.equal('<p>this is the foo folder</p>\n')
       res.should.have.status(200)
       done()
@@ -53,7 +53,7 @@ describe 'basic', ->
         sentinel = true
         next()
 
-    chai.request(app).get('/foo.html').res (res) ->
+    chai.request(app).get('/foo.html').end (res) ->
       res.should.have.status(404)
       sentinel.should.be.true
       done()
@@ -64,7 +64,7 @@ describe 'basic', ->
         res.end()
 
     server.listen(1235)
-    chai.request(server).get('/').res (res) ->
+    chai.request(server).get('/').end (res) ->
       res.should.have.status(200)
       res.text.should.equal('<p>hello world!</p>\n')
       server.close(done)
@@ -77,14 +77,14 @@ describe 'options', ->
   it 'sets etags by default', (done) ->
     @app = connect().use(alchemist(@base))
 
-    chai.request(@app).get('/').res (res) ->
+    chai.request(@app).get('/').end (res) ->
       res.headers.etag.should.exist
       done()
 
   it 'does not set etags if "etags" option is false', (done) ->
     @app = connect().use(alchemist(@base, { etag: false }))
 
-    chai.request(@app).get('/').res (res) ->
+    chai.request(@app).get('/').end (res) ->
       should.not.exist(res.headers.etag)
       done()
 
@@ -97,7 +97,7 @@ describe 'options', ->
         sentinel = true
         next()
 
-    chai.request(@app).get('/.secret').res (res) ->
+    chai.request(@app).get('/.secret').end (res) ->
       res.should.have.status(404)
       sentinel.should.be.true
       done()
@@ -105,21 +105,21 @@ describe 'options', ->
   it 'serves dotfiles if "hidden" option is true', (done) ->
     @app = connect().use(alchemist(@base, { dotfiles: 'allow' }))
 
-    chai.request(@app).get('/.secret').res (res) ->
+    chai.request(@app).get('/.secret').end (res) ->
       res.should.have.status(200)
       done()
 
   it 'serves a different directory index if "index" option present', (done) ->
     @app = connect().use(alchemist(@base, { index: 'wow.html' }))
 
-    chai.request(@app).get('/').res (res) ->
+    chai.request(@app).get('/').end (res) ->
       res.text.should.equal("<p>alternate index</p>\n")
       done()
 
   it 'sets cache control headers if "maxage" option is present', (done) ->
     @app = connect().use(alchemist(@base, { maxage: 2000 }))
 
-    chai.request(@app).get('/').res (res) ->
+    chai.request(@app).get('/').end (res) ->
       res.headers['cache-control'].should.equal('public, max-age=2')
       done()
 
@@ -128,6 +128,6 @@ describe 'options', ->
       .use((req, res, next) -> res.setHeader('cache-control', 'wow'); next() )
       .use(alchemist(@base, { maxage: 1337 }))
 
-    chai.request(@app).get('/').res (res) ->
+    chai.request(@app).get('/').end (res) ->
       res.headers['cache-control'].should.equal('wow')
       done()

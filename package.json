@@ -9,16 +9,20 @@
     "url": "https://github.com/carrot/alchemist-middleware.git"
   },
   "main": "lib",
+  "dependencies": {
+    "parseurl": "1.x",
+    "send": "0.13.x"
+  },
   "devDependencies": {
-    "mocha": "*",
-    "chai": "*",
-    "chai-http": "*",
-    "connect": "*",
-    "coffeelint": "*",
-    "istanbul": "*",
-    "mocha-lcov-reporter": "*",
-    "coveralls": "*",
-    "coffee-script": "1.8.x"
+    "mocha": "2.x",
+    "chai": "3.x",
+    "chai-http": "1.x",
+    "connect": "3.x",
+    "coffeelint": "1.x",
+    "istanbul": "0.3.x",
+    "mocha-lcov-reporter": "0.0.2",
+    "coveralls": "2.x",
+    "coffee-script": "1.9.x"
   },
   "scripts": {
     "test": "npm run lint && mocha",
@@ -28,9 +32,5 @@
   },
   "engines": {
     "node": ">=0.10.0"
-  },
-  "dependencies": {
-    "parseurl": "1.x",
-    "send": "0.9.x"
   }
 }
